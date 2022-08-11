@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.RegisterReq;
 import ru.skypro.homework.dto.Role;
 import ru.skypro.homework.service.AuthService;
+import ru.skypro.homework.service.UserServices;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -17,8 +18,11 @@ public class AuthServiceImpl implements AuthService {
 
     private final PasswordEncoder encoder;
 
-    public AuthServiceImpl(UserDetailsManager manager) {
+    private final UserServices userServices;
+
+    public AuthServiceImpl(UserDetailsManager manager, UserServices userServices) {
         this.manager = manager;
+        this.userServices = userServices;
         this.encoder = new BCryptPasswordEncoder();
     }
 
@@ -41,9 +45,11 @@ public class AuthServiceImpl implements AuthService {
         manager.createUser(
                 User.withDefaultPasswordEncoder()
                         .password(registerReq.getPassword())
-                        .username(registerReq.getUsername())
+                       .username(registerReq.getUsername())
                         .roles(role.name())
                         .build()
+                //userServices.add(registerReq)
+
         );
         return true;
     }
