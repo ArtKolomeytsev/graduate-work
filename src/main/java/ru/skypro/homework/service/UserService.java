@@ -1,7 +1,7 @@
 package ru.skypro.homework.service;
 
 import ru.skypro.homework.dto.*;
-import ru.skypro.homework.entity.User;
+import ru.skypro.homework.entities.User;
 
 public interface UserService {
 

@@ -2,7 +2,7 @@ package ru.skypro.homework.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.RegisterReq;
-import ru.skypro.homework.entity.User;
+import ru.skypro.homework.entities.User;
 import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.service.impl.UserServiceImpl;
 
@@ -18,8 +18,9 @@ public class UserController {
 
     @PostMapping(path = "/add")
     public User add(@RequestBody  RegisterReq registerReq) {
-        UserMapper.INSTANCE.toModel(registerReq);
-        return userService.add(registerReq);
+        //UserMapper.INSTANCE.toModel(registerReq);
+        return null;
+        //return userService.add(registerReq);
     }
 
 }

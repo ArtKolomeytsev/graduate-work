@@ -3,6 +3,7 @@ package ru.skypro.homework.repo;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import ru.skypro.homework.dto.*;
+import ru.skypro.homework.entities.User;
 import ru.skypro.homework.entity.User;
 
 @Repository
