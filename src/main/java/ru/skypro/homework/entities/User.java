@@ -1,12 +1,14 @@
 package ru.skypro.homework.entities;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
-import ru.skypro.homework.dto.Role;
-
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.List;
 
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "Users")
 @Data
@@ -16,8 +18,7 @@ public class User {
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(name = "system-uuid", strategy = "uuid")
     @Column(name = "id")
-    private String id;
-
+    private Integer id;
     @Column(name = "Username")
     private String username;
     @Column(name = "Password")
@@ -28,8 +29,19 @@ public class User {
     private String lastName;
     @Column(name = "Phone")
     private String phone;
+    @Column(name = "Email")
+    private String email;
+    public enum RoleEnum {
+        ADMIN, USER;
+    }
     @Column(name = "Role")
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    private RoleEnum roleEnum;
 
+    @OneToMany
+    private List<Ads> adsList;
 
+    @OneToMany
+    private List<AdsComments> adsCommentsList;
 }
+

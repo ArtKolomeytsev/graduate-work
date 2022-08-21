@@ -5,26 +5,29 @@ import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.Date;
 
 @Data
 @Entity
-@Table(name = "comments_for_message")
-public class CommentsForMessage {
+@Table(name = "Ads_comment")
+public class AdsComments {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(strategy = "uuid",name = "system-uuid")
     @Column(name = "id")
-    private String idComment;
+    private Integer idComment;
 
     @Column(name = "comment")
-    private String comment;
+    private String text;
 
     @Column(name = "date_comm")
-    @CreatedDate
-    private Date dateImg;
+    private OffsetDateTime dateTime;
 
     @ManyToOne
     @JoinColumn(name = "messId")
-    private Messages messages;
+    private Ads messages;
+
+    @ManyToOne
+    private User user;
 }

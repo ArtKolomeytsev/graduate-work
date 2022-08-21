@@ -18,9 +18,7 @@ public class UserController {
 
     @PostMapping(path = "/add")
     public User add(@RequestBody  RegisterReq registerReq) {
-        //UserMapper.INSTANCE.toModel(registerReq);
         return null;
-        //return userService.add(registerReq);
     }
 
 }

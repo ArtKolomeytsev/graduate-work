@@ -2,31 +2,36 @@ package ru.skypro.homework.entities;
 
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
-import org.springframework.data.annotation.CreatedDate;
-
 import javax.persistence.*;
-import java.util.Date;
+import java.util.List;
 
 @Entity
 @Data
-@Table(name = "messages")
-public class Messages {
+@Table(name = "Ads")
+public class Ads {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(strategy = "uuid", name = "system-uuid")
     @Column(name="id")
-    private String messId;
+    private Integer messId;
 
-    @Column(name="message")
-    private String  messageData;
+    @Column(name = "Price")
+    private Integer price;
 
-    @Column(name = "date_mess")
-    @CreatedDate
-    private Date dateMess;
+    @Column(name = "Description")
+    private String description;
+
+    @Column(name = "Title")
+    private String title;
+
+    private String image;
 
     @ManyToOne
     @JoinColumn(name = "idUser")
     private User user;
+
+    @OneToMany
+    private List<AdsComments> adsComments;
 
 
 }

@@ -12,7 +12,6 @@ public class RegReg {
         USER("USER");
 
         RoleEnum(String value) {
-
         }
         }
 

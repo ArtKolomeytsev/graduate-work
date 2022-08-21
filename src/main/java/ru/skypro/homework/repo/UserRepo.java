@@ -1,14 +1,16 @@
 package ru.skypro.homework.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.entities.User;
-import ru.skypro.homework.entity.User;
+
+import java.util.List;
 
 @Repository
-public interface UserRepo extends JpaRepository<User, String> {
+public interface UserRepo extends JpaRepository<User, Integer> {
 
-    User findUserByUsername(LoginReq loginReq);
-    User save(User user);
+    @Query(value = "select * from users order by id",nativeQuery = true)
+    List<User> findAllUsers();
 }

@@ -1,16 +1,20 @@
 package ru.skypro.homework.mapper;
 
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
-import ru.skypro.homework.dto.RegisterReq;
+import ru.skypro.homework.dto.CreateUser;
+import ru.skypro.homework.dto.RegReg;
+import ru.skypro.homework.dto.UsersDto;
 import ru.skypro.homework.entities.User;
 
-@Mapper
+import java.util.List;
+
+@Mapper(componentModel = "spring")
 public interface UserMapper {
 
-    UserMapper INSTANCE = Mappers.getMapper(UserMapper.class);
+    UsersDto toDTO(User user);
 
-    RegisterReq toDTO(User user);
+    User toModel(CreateUser createUser, RegReg regReg);
 
-    User toModel(RegisterReq registerReq);
+    List<UsersDto> usersToDto(List<User> userList);
+
 }

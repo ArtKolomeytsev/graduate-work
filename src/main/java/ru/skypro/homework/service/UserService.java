@@ -5,7 +5,13 @@ import ru.skypro.homework.entities.User;
 
 public interface UserService {
 
-    User getUser(LoginReq loginReq);
+    UsersDto getUser(Integer id);
 
-    User add(RegisterReq registerReq);
+    UsersDto setPassword(UsersDto usersDto, NewPassword newPassword);
+
+    UsersDto add(CreateUser createUser, RegReg regReg);
+
+    ResponseWrapperUser findAllUsers();
+
+    UsersDto updateUser(UsersDto usersDto);
 }

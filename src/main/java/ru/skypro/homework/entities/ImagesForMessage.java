@@ -31,5 +31,5 @@ public class ImagesForMessage {
 
     @ManyToOne
     @JoinColumn(name = "messId")
-    private Messages messages;
+    private Ads messages;
 }
