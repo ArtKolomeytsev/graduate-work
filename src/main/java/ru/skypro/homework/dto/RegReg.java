@@ -16,5 +16,4 @@ public class RegReg {
         }
 
     private RoleEnum roleEnum;
-    private String username;
 }
