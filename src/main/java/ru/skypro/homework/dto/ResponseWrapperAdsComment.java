@@ -7,5 +7,5 @@ import java.util.List;
 @Data
 public class ResponseWrapperAdsComment {
     private Integer count;
-    private List<AdsComment> result;
+    private List<AdsCommentDto> result;
 }

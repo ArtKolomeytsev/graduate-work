@@ -27,7 +27,7 @@ public class Ads {
     private String image;
 
     @ManyToOne
-    @JoinColumn(name = "idUser")
+    @JoinColumn(name = "userId")
     private User user;
 
     @OneToMany

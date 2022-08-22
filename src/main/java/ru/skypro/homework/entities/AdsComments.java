@@ -29,5 +29,6 @@ public class AdsComments {
     private Ads messages;
 
     @ManyToOne
+    @JoinColumn(name = "userId")
     private User user;
 }
