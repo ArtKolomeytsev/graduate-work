@@ -38,10 +38,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RoleEnum roleEnum;
 
-    @OneToMany
+    @OneToMany(mappedBy = "Users")
     private List<Ads> adsList;
 
-    @OneToMany
+    @OneToMany(mappedBy = "Users")
     private List<AdsComments> adsCommentsList;
 }
 

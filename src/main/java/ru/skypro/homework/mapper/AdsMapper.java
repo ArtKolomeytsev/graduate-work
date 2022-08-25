@@ -14,7 +14,6 @@ public interface AdsMapper {
     @Mapping(source = "user.userId", target = "author")
     AdsDTO adsEntityToDto(Ads ads);
 
-    @Mapping(source = "pk", target = "messId")
     Ads createAdsToEntity(CreateAds createAds);
 
     @Mapping(source = "user.firstName", target = "authorFirstName")

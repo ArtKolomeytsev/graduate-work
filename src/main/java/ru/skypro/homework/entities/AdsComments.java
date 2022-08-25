@@ -15,7 +15,7 @@ public class AdsComments {
     @Id
     @GeneratedValue(generator = "system-uuid")
     @GenericGenerator(strategy = "uuid",name = "system-uuid")
-    @Column(name = "id")
+    @Column(name = "comment_id")
     private Integer idComment;
 
     @Column(name = "comment")
@@ -25,10 +25,10 @@ public class AdsComments {
     private OffsetDateTime dateTime;
 
     @ManyToOne
-    @JoinColumn(name = "messId")
+    @JoinColumn(name = "mess_id")
     private Ads messages;
 
     @ManyToOne
-    @JoinColumn(name = "userId")
+    @JoinColumn(name = "user_id")
     private User user;
 }
