@@ -13,12 +13,10 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     private final UserRepo userRepo;
+    private UserMapper userMapper;
 
-    private final UserMapper userMapper;
-
-    public UserServiceImpl(UserRepo userRepo, UserMapper userMapper) {
+    public UserServiceImpl(UserRepo userRepo) {
         this.userRepo = userRepo;
-        this.userMapper = userMapper;
     }
 
     @Override

@@ -9,14 +9,13 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Data
 @Table(name = "images_for_message")
+@Data
 public class ImagesForMessage {
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(strategy = "uuid", name = "system-uuid")
+    @GeneratedValue
     @Column(name="id")
-    private String imgId;
+    private Integer imgId;
 
     @Column(name = "media_type")
     private String mediaType;

@@ -1,5 +1,6 @@
 package ru.skypro.homework.service.impl;
 
+import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.AdsDTO;
 import ru.skypro.homework.dto.CreateAds;
 import ru.skypro.homework.dto.FullAds;
@@ -12,16 +13,18 @@ import ru.skypro.homework.repo.UserRepo;
 import ru.skypro.homework.service.AdsService;
 
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class AdsServiceImpl implements AdsService {
 
     private final AdsRepo adsRepo;
-    private final AdsMapper adsMapper;
     private final UserRepo userRepo;
 
-    public AdsServiceImpl(AdsRepo adsRepo, AdsMapper adsMapper, UserRepo userRepo) {
+    private AdsMapper adsMapper;
+
+    public AdsServiceImpl(AdsRepo adsRepo, UserRepo userRepo) {
         this.adsRepo = adsRepo;
-        this.adsMapper = adsMapper;
         this.userRepo = userRepo;
     }
 
@@ -35,9 +38,10 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public void createAds(CreateAds createAds) {
-        Ads ads = adsMapper.createAdsToEntity(createAds);
-        adsRepo.save(ads);
+    public FullAds createAds(CreateAds createAds) {
+        Ads ads = adsRepo.save(adsMapper.createAdsToEntity(createAds));
+        FullAds respons = adsMapper.entityToFullAds(ads);
+        return respons;
     }
 
     @Override
@@ -51,8 +55,14 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public void deleteAds() {
-
+    public FullAds deleteAdsById(Integer id) {
+        Ads ads = adsRepo.findById(id).get();
+        if(ads != null){
+            adsRepo.deleteById(id);
+            FullAds respons = adsMapper.entityToFullAds(ads);
+            return respons;
+        }
+        return null;
     }
 
     @Override
@@ -62,7 +72,7 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public AdsDTO updateAds(AdsDTO adsDTO) {
+    public FullAds updateAds(CreateAds createAds) {
         return null;
     }
 }
