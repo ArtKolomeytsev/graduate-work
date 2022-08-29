@@ -6,7 +6,6 @@ import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
 import java.time.OffsetDateTime;
-import java.util.Date;
 
 
 @Entity
@@ -31,5 +30,5 @@ public class AdsComments {
 
     @ManyToOne
     @JoinColumn(name = "userid")
-    private User user;
+    private Users user;
 }

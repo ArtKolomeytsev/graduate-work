@@ -1,7 +1,6 @@
 package ru.skypro.homework.entities;
 
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
@@ -32,13 +31,13 @@ public class Ads {
 
     @ManyToOne
     @JoinColumn(name = "userid")
-    private User user;
+    private Users user;
 
     @OneToMany(mappedBy = "messages")
     private List<AdsComments> adsComments;
 
-    @OneToMany(mappedBy = "messages")
-    private List<ImagesForMessage> imagesForMessages;
+    @OneToOne(mappedBy = "messages")
+    private AdvertImages imagesForMessages;
 
 
 }

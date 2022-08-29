@@ -1,22 +1,20 @@
 package ru.skypro.homework.mapper;
 
 import org.mapstruct.Mapper;
-import org.springframework.stereotype.Service;
-import ru.skypro.homework.dto.CreateUser;
+import ru.skypro.homework.dto.CreateUserDto;
 import ru.skypro.homework.dto.RegReg;
 import ru.skypro.homework.dto.UsersDto;
-import ru.skypro.homework.entities.User;
+import ru.skypro.homework.entities.Users;
 
 import java.util.List;
 
 @Mapper(componentModel = "spring")
-@Service
 public interface UserMapper {
 
-    UsersDto toDTO(User user);
+    UsersDto toDTO(Users user);
 
-    User toModel(CreateUser createUser, RegReg regReg);
+    Users toModel(CreateUserDto createUser, RegReg regReg);
 
-    List<UsersDto> usersToDto(List<User> userList);
+    List<UsersDto> usersToDto(List<Users> userList);
 
 }

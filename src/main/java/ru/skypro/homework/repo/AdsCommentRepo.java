@@ -3,7 +3,6 @@ package ru.skypro.homework.repo;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import ru.skypro.homework.entities.Ads;
 import ru.skypro.homework.entities.AdsComments;
 
 import java.util.List;

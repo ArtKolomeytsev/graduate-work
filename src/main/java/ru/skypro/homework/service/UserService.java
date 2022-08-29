@@ -1,7 +1,6 @@
 package ru.skypro.homework.service;
 
 import ru.skypro.homework.dto.*;
-import ru.skypro.homework.entities.User;
 
 public interface UserService {
 
@@ -9,7 +8,7 @@ public interface UserService {
 
     UsersDto setPassword(UsersDto usersDto, NewPassword newPassword);
 
-    UsersDto add(CreateUser createUser, RegReg regReg);
+    UsersDto add(CreateUserDto createUser, RegReg regReg);
 
     ResponseWrapperUser findAllUsers();
 
