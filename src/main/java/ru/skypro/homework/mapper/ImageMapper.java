@@ -5,7 +5,7 @@ import ru.skypro.homework.dto.GetImageDto;
 import ru.skypro.homework.dto.UploadImageDto;
 import ru.skypro.homework.entities.AdvertImages;
 
-@Mapper
+@Mapper(componentModel = "spring")
 public interface ImageMapper {
 
     AdvertImages dtoToEntity(UploadImageDto uploadImageDto);

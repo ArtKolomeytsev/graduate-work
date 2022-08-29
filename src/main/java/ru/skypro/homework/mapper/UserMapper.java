@@ -13,7 +13,7 @@ public interface UserMapper {
 
     UsersDto toDTO(Users user);
 
-    Users toModel(CreateUserDto createUser, RegReg regReg);
+    Users toModel(RegReg regReg);
 
     List<UsersDto> usersToDto(List<Users> userList);
 
