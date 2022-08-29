@@ -10,14 +10,13 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "Users")
 @Data
-public class User {
+@Table(name = "users")
+public class Users {
 
     @Id
-    @GeneratedValue(generator = "system-uuid")
-    @GenericGenerator(name = "system-uuid", strategy = "uuid")
-    @Column(name = "userId")
+    @GeneratedValue
+    @Column(name = "userid")
     private Integer id;
     @Column(name = "Username")
     private String username;
@@ -38,10 +37,10 @@ public class User {
     @Enumerated(EnumType.STRING)
     private RoleEnum roleEnum;
 
-    @OneToMany(mappedBy = "Users")
+    @OneToMany(mappedBy = "user")
     private List<Ads> adsList;
 
-    @OneToMany(mappedBy = "Users")
+    @OneToMany(mappedBy = "user")
     private List<AdsComments> adsCommentsList;
 }
 

@@ -25,7 +25,7 @@ public class AdsController {
     }
 
     @PostMapping
-    public ResponseEntity addAds(CreateAds createAds) {
+    public ResponseEntity addAds(CreateAdsDto createAds) {
 
     }
 
@@ -65,12 +65,12 @@ public class AdsController {
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<FullAds> getFullAds() {
+    public ResponseEntity<FullAdsDto> getFullAds() {
 
     }
 
     @PatchMapping(path = "{id}")
-    public ResponseEntity<AdsDTO> updateAds(AdsDTO) {
+    public ResponseEntity<AdsDTO> updateAds(AdsDTO adsDTO) {
 
     }
 

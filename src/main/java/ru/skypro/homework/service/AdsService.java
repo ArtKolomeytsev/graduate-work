@@ -8,13 +8,13 @@ public interface AdsService {
 
     public ResponseWrapperAds getAllAds();
 
-    public void createAds(CreateAds createAds);
+    public void createAds(CreateAdsDto createAds);
 
     public ResponseWrapperAds getAllMyAds(String username);
 
     public void deleteAds();
 
-    public FullAds getAdsById(Integer id);
+    public FullAdsDto getAdsById(Integer id);
 
     public AdsDTO updateAds(AdsDTO adsDTO);
 }

@@ -3,8 +3,6 @@ package ru.skypro.homework.controller;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.*;
-import ru.skypro.homework.entities.User;
-import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.service.impl.UserServiceImpl;
 
 @RestController
@@ -18,7 +16,7 @@ public class UserController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity<UsersDto> add(@RequestBody  CreateUser createUser, @RequestBody RegReg regReg) {
+    public ResponseEntity<UsersDto> add(@RequestBody CreateUserDto createUser, @RequestBody RegReg regReg) {
         UsersDto usersDto = userService.add(createUser, regReg);
         return ResponseEntity.ok(usersDto);
     }
