@@ -30,8 +30,8 @@ public class Ads {
     private Date dateMess;
 
     @ManyToOne
-    @JoinColumn(name = "userid")
-    private Users user;
+    @JoinColumn(name = "userId")
+    private UsersInfo user;
 
     @OneToMany(mappedBy = "messages")
     private List<AdsComments> adsComments;

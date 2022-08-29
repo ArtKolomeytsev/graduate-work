@@ -8,7 +8,6 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.RegisterReq;
 import ru.skypro.homework.dto.RoleDto;
-import ru.skypro.homework.entities.Users;
 import ru.skypro.homework.service.AuthService;
 import ru.skypro.homework.service.UserService;
 
