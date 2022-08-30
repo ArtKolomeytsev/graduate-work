@@ -2,13 +2,14 @@
 -- changeset Diplombase:1
 CREATE TABLE IF NOT EXISTS users
 (
-    id INT
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 )
     ,first_name character varying(255) COLLATE pg_catalog."default"
     ,last_name character varying(255) COLLATE pg_catalog."default"
     ,password character varying(255) COLLATE pg_catalog."default"
     ,phone character varying(255) COLLATE pg_catalog."default"
     ,username character varying(255) COLLATE pg_catalog."default"
     ,role character varying(10) COLLATE pg_catalog."default"
+    ,enabled boolean
     ,CONSTRAINT usr_pkey PRIMARY KEY (id)
 );
 
@@ -53,4 +54,11 @@ CREATE TABLE IF NOT EXISTS ads_comment
     REFERENCES public.ads (id) MATCH SIMPLE
                         ON UPDATE NO ACTION
                         ON DELETE NO ACTION
+);
+
+CREATE TABLE IF NOT EXISTS public.authorities
+(
+    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 )
+    ,username character varying(255) COLLATE pg_catalog."default"
+    ,authority character varying(255) COLLATE pg_catalog."default"
 );

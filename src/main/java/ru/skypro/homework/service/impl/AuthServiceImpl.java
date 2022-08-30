@@ -8,19 +8,23 @@ import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.RegisterReq;
 import ru.skypro.homework.dto.RoleDto;
+import ru.skypro.homework.dto.UsersDto;
 import ru.skypro.homework.entities.Users;
+import ru.skypro.homework.mapper.UserMapper;
 import ru.skypro.homework.service.AuthService;
-import ru.skypro.homework.service.UserService;
 
 @Service
 public class AuthServiceImpl implements AuthService {
 
     private final UserDetailsManager manager;
-    private final UserService userService;
+    private final UserServiceImpl userService;
     private final PasswordEncoder encoder;
 
-    public AuthServiceImpl(UserDetailsManager manager, UserService userService) {
+    private final UserMapper userMapper;
+
+    public AuthServiceImpl(UserDetailsManager manager, UserServiceImpl userService, UserMapper userMapper) {
         this.manager = manager;
+        this.userMapper = userMapper;
         this.encoder = new BCryptPasswordEncoder();
         this.userService = userService;
     }
@@ -48,6 +52,14 @@ public class AuthServiceImpl implements AuthService {
                         .roles(role.name())
                         .build()
         );
+
+        /*Users savedUser = userService.getUserByUsername(registerReq.getUsername());
+        savedUser.setFirstName(registerReq.getFirstName());
+        savedUser.setLastName(registerReq.getLastName());
+        savedUser.setPhone(registerReq.getPhone());
+        savedUser.setEmail(registerReq.getUsername());
+        UsersDto usersDto = userMapper.toDTO(savedUser);
+        this.userService.updateUser(usersDto);*/
 
         return true;
 

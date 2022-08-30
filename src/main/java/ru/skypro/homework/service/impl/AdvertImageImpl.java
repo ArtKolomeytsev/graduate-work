@@ -1,6 +1,7 @@
 package ru.skypro.homework.service.impl;
 
 import liquibase.pro.packaged.A;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import ru.skypro.homework.dto.GetImageDto;
 import ru.skypro.homework.entities.AdvertImages;
@@ -9,7 +10,7 @@ import ru.skypro.homework.repo.AdvertImageRepo;
 import ru.skypro.homework.service.AdvertImageService;
 
 import java.io.IOException;
-
+@Service
 public class AdvertImageImpl implements AdvertImageService {
 
     private final AdvertImageRepo advertImageRepo;

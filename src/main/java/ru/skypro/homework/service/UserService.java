@@ -1,6 +1,7 @@
 package ru.skypro.homework.service;
 
 import ru.skypro.homework.dto.*;
+import ru.skypro.homework.entities.Users;
 
 public interface UserService {
 
@@ -13,4 +14,6 @@ public interface UserService {
     ResponseWrapperUser findAllUsers();
 
     UsersDto updateUser(UsersDto usersDto);
+
+    Users getUserByUsername(String userName);
 }

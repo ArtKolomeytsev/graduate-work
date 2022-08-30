@@ -1,5 +1,6 @@
 package ru.skypro.homework.service.impl;
 
+import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.entities.Ads;
 import ru.skypro.homework.entities.Users;
@@ -9,7 +10,7 @@ import ru.skypro.homework.repo.UserRepo;
 import ru.skypro.homework.service.AdsService;
 
 import java.util.List;
-
+@Service
 public class AdsServiceImpl implements AdsService {
 
     private final AdsRepo adsRepo;
@@ -39,8 +40,8 @@ public class AdsServiceImpl implements AdsService {
 
     @Override
     public ResponseWrapperAds getAllMyAds(String username) {
-        Users user = userRepo.getUserByUsername(username).get();
-        List<AdsDTO> adsDTO = adsMapper.adsEntityToDtoList(adsRepo.findByUserId(user.getId()));
+        Users user = userRepo.getUserByUsername(username);
+        List<AdsDTO> adsDTO = adsMapper.adsEntityToDtoList(adsRepo.findByUserId(user.getUserid()));
         ResponseWrapperAds responseWrapperAds = new ResponseWrapperAds();
         responseWrapperAds.setCount(adsDTO.size());
         responseWrapperAds.setResult(adsDTO);

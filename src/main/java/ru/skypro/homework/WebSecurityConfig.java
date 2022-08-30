@@ -1,6 +1,5 @@
 package ru.skypro.homework;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,8 +12,8 @@ import static org.springframework.security.config.Customizer.withDefaults;
 @Configuration
 public class WebSecurityConfig {
 
-    @Autowired
-    DataSource dataSource;
+    //@Autowired
+    private final DataSource dataSource;
 
     private static final String[] AUTH_WHITELIST = {
             "/swagger-resources/**",
@@ -24,6 +23,10 @@ public class WebSecurityConfig {
             "/login", "/register",
             "/ads"
     };
+
+    public WebSecurityConfig(DataSource dataSource) {
+        this.dataSource = dataSource;
+    }
 
     @Bean
     public JdbcUserDetailsManager userDetailsManager (DataSource dataSource) {

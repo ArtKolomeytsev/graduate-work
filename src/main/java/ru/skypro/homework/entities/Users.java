@@ -15,9 +15,9 @@ import java.util.List;
 public class Users {
 
     @Id
-    @GeneratedValue
-    @Column(name = "userid")
-    private Integer id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private Integer userid;
     @Column(name = "Username")
     private String username;
     @Column(name = "Password")
@@ -30,6 +30,8 @@ public class Users {
     private String phone;
     @Column(name = "Email")
     private String email;
+    @Column(name = "enabled")
+    private boolean enabled;
     public enum RoleEnum {
         ADMIN, USER;
     }
