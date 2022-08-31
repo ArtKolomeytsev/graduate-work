@@ -20,10 +20,47 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UsersDto add(CreateUserDto createUser, RegReg regReg) {
-        Users user = userMapper.toModel(regReg);
+    public UsersDto add(RegisterReq createUser) {
+        Users user = userMapper.toModel(createUser);
         userRepo.save(user);
         return userMapper.toDTO(user);
+    }
+
+    @Override
+    public UsersDto update(RegisterReq updateUser) {
+        Users user = userMapper.toModel(updateUser);
+        userRepo.save(user);
+        return userMapper.toDTO(user);
+    }
+
+    @Override
+    public UsersDto deleteUserById(Integer id) {
+        Users user = userRepo.findUsersByUserid(id);
+        if(user == null){
+            return null;
+        }else {
+            try {
+                userRepo.deleteUsersByUserid(id);
+                return userMapper.toDTO(user);
+            }catch (Exception exception){
+                return null;
+            }
+        }
+    }
+
+    @Override
+    public UsersDto deleteUserByUsername(String userName) {
+        Users user = userRepo.findUsersByUsername(userName);
+        if(user == null){
+            return null;
+        }else {
+            try {
+                userRepo.deleteUsersByUserid(user.getUserid());
+                return userMapper.toDTO(user);
+            }catch (Exception exception){
+                return null;
+            }
+        }
     }
 
     @Override
@@ -50,19 +87,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UsersDto updateUser(UsersDto usersDto) {
-        Users user = userRepo.findById(usersDto.getId()).get();
-        user.setFirstName(usersDto.getFirstName());
-        user.setLastName(usersDto.getLastName());
-        user.setUsername(usersDto.getUsername());
-        user.setPhone(usersDto.getPhone());
-        user.setEmail(usersDto.getEmail());
-        userRepo.save(user);
-        return usersDto;
-    }
-
-    @Override
-    public Users getUserByUsername(String userName) {
-        return userRepo.getUserByUsername(userName);
+    public UsersDto getUserByUsername(String userName) {
+        return userMapper.toDTO(userRepo.getUserByUsername(userName));
     }
 }

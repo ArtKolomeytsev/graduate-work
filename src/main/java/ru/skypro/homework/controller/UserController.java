@@ -1,5 +1,6 @@
 package ru.skypro.homework.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.*;
@@ -16,8 +17,29 @@ public class UserController {
     }
 
     @PostMapping(path = "/add")
-    public ResponseEntity<UsersDto> add(@RequestBody CreateUserDto createUser, @RequestBody RegReg regReg) {
-        UsersDto usersDto = userService.add(createUser, regReg);
+    public ResponseEntity<UsersDto> add(@RequestBody RegisterReq createUser) {
+        UsersDto usersDto = userService.add(createUser);
+        if(usersDto == null){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(usersDto);
+    }
+
+    @DeleteMapping(path = "/deleteById/{id}")
+    public ResponseEntity<UsersDto> deleteById(@PathVariable Integer id){
+        UsersDto usersDto = userService.deleteUserById(id);
+        if(usersDto == null){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+        return ResponseEntity.ok(usersDto);
+    }
+
+    @DeleteMapping(path = "/deleteByUsername/{id}")
+    public ResponseEntity<UsersDto> deleteByUsername(@PathVariable String userName){
+        UsersDto usersDto = userService.deleteUserByUsername(userName);
+        if(usersDto == null){
+            ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
         return ResponseEntity.ok(usersDto);
     }
 
@@ -26,14 +48,35 @@ public class UserController {
         return ResponseEntity.ok(userService.findAllUsers());
     }
 
-    @PatchMapping(path = "/me")
-    public ResponseEntity<UsersDto> updateUser(UsersDto usersDto) {
-        return ResponseEntity.ok(userService.updateUser(usersDto));
+    @PutMapping(path = "/update")
+    public ResponseEntity<UsersDto> updateUser(@RequestBody RegisterReq createUser) {
+        UsersDto usersDto = userService.update(createUser);
+        if (usersDto != null) {
+            return ResponseEntity.ok(usersDto);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
     }
 
     @GetMapping(path = "/{id}")
-    public ResponseEntity<UsersDto> getUser(@PathVariable("id") int id) {
-        return ResponseEntity.ok(userService.getUser(id));
+    public ResponseEntity<UsersDto> getUser(@PathVariable Integer id) {
+        UsersDto usersDto = userService.getUser(id);
+        if (usersDto != null) {
+            return ResponseEntity.ok(usersDto);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+
+    @GetMapping(path = "getUserByUsername/{username}")
+    public ResponseEntity<UsersDto> getUserByUsername(@PathVariable String username) {
+        UsersDto usersDto = userService.getUserByUsername(username);
+        if (usersDto != null) {
+            return ResponseEntity.ok(usersDto);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
 }

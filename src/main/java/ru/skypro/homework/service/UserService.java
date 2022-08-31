@@ -9,11 +9,15 @@ public interface UserService {
 
     UsersDto setPassword(UsersDto usersDto, NewPassword newPassword);
 
-    UsersDto add(CreateUserDto createUser, RegReg regReg);
+    UsersDto add(RegisterReq createUser);
+
+    UsersDto update(RegisterReq updateUser);
+
+    UsersDto deleteUserById(Integer id);
+
+    UsersDto deleteUserByUsername(String userName);
 
     ResponseWrapperUser findAllUsers();
 
-    UsersDto updateUser(UsersDto usersDto);
-
-    Users getUserByUsername(String userName);
+    UsersDto getUserByUsername(String userName);
 }

@@ -13,6 +13,9 @@ public interface UserRepo extends JpaRepository<Users, Integer> {
 
     @Query(value = "select * from users order by userId",nativeQuery = true)
     List<Users> findAllUsers();
-
     Users getUserByUsername(String username);
+
+    Users findUsersByUserid(Integer id);
+    Users findUsersByUsername(String username);
+    void deleteUsersByUserid(Integer id);
 }

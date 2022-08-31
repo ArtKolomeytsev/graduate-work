@@ -4,6 +4,7 @@ import org.mapstruct.Mapper;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.CreateUserDto;
 import ru.skypro.homework.dto.RegReg;
+import ru.skypro.homework.dto.RegisterReq;
 import ru.skypro.homework.dto.UsersDto;
 import ru.skypro.homework.entities.Users;
 
@@ -15,7 +16,7 @@ public interface UserMapper {
 
     UsersDto toDTO(Users user);
 
-    Users toModel(RegReg regReg);
+    Users toModel(RegisterReq registerReq);
 
     List<UsersDto> usersToDto(List<Users> userList);
 
