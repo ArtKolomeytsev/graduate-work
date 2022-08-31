@@ -3,6 +3,8 @@ package ru.skypro.homework.service;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.entities.Users;
 
+import java.util.List;
+
 public interface UserService {
 
     UsersDto getUser(Integer id);
@@ -20,4 +22,6 @@ public interface UserService {
     ResponseWrapperUser findAllUsers();
 
     UsersDto getUserByUsername(String userName);
+
+    List<UsersDto>  getUserAll();
 }

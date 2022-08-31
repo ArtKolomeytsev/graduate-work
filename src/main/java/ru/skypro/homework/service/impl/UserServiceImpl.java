@@ -90,4 +90,10 @@ public class UserServiceImpl implements UserService {
     public UsersDto getUserByUsername(String userName) {
         return userMapper.toDTO(userRepo.getUserByUsername(userName));
     }
+
+    @Override
+    public List<UsersDto> getUserAll() {
+        List<Users> usersList = userRepo.findAllUsers();
+        return userMapper.usersToDto(usersList);
+    }
 }

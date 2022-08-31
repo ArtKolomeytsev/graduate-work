@@ -1,14 +1,13 @@
 package ru.skypro.homework.service;
 
 import ru.skypro.homework.dto.*;
-
-import java.util.List;
+import ru.skypro.homework.entities.Ads;
 
 public interface AdsService {
 
     public ResponseWrapperAds getAllAds();
 
-    public void createAds(CreateAdsDto createAds);
+    public Ads createAds(CreateAdsDto createAds);
 
     public ResponseWrapperAds getAllMyAds(String username);
 

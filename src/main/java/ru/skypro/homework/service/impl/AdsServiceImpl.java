@@ -33,9 +33,9 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public void createAds(CreateAdsDto createAds) {
+    public Ads createAds(CreateAdsDto createAds) {
         Ads ads = adsMapper.createAdsToEntity(createAds);
-        adsRepo.save(ads);
+        return adsRepo.save(ads);
     }
 
     @Override

@@ -1,9 +1,13 @@
 package ru.skypro.homework.controller;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.*;
-import ru.skypro.homework.service.AdsService;
+import ru.skypro.homework.entities.Ads;
 import ru.skypro.homework.service.CommentService;
 import ru.skypro.homework.service.impl.AdsServiceImpl;
 
@@ -22,27 +26,65 @@ public class AdsController {
 
     @GetMapping
     public ResponseEntity<ResponseWrapperAds> getAllAds() {
-        return null;
+        ResponseWrapperAds ads = adsService.getAllAds();
+        if (ads != null) {
+            return ResponseEntity.ok(ads);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
+    @PostMapping(path = "/add")
+    public ResponseEntity<Ads> addAds(@RequestBody CreateAdsDto createAds) {
+        Ads ads = adsService.createAds(createAds);
+        if (ads != null) {
+            return ResponseEntity.ok(ads);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
-    @PostMapping
-    public ResponseEntity addAds(CreateAdsDto createAds) {
-        return null;
-    }
-
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping(path = "/me")
-    public ResponseEntity<ResponseWrapperAds> getAllUserAds() {
-        return null;
+    public ResponseEntity<ResponseWrapperAds> getAllUserAds(Authentication authentication) {
+        ResponseWrapperAds ads = adsService.getAllMyAds(authentication.getName());
+        if (ads != null) {
+            return ResponseEntity.ok(ads);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping(path = "/{ad_pk}/comments")
-    public ResponseEntity<ResponseWrapperAdsComment> getAllCommentsAds() {
-        return null;
+    public ResponseEntity<AdsCommentDto> getAllCommentsAds(@PathVariable Integer ad_pk) {
+        AdsCommentDto ads = commentService.getComment(ad_pk);
+        if (ads != null) {
+            return ResponseEntity.ok(ads);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+    }
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping(path = "/{message}/comments")
+    public ResponseEntity<ResponseWrapperAdsComment> getAllCommentsByAdsId(@PathVariable Integer message) {
+        ResponseWrapperAdsComment ads = commentService.getAllCommentsByAdsId(message);
+        if (ads != null) {
+            return ResponseEntity.ok(ads);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
-    @PostMapping(path = "/{ad_pk}/comments")
-    public ResponseEntity<AdsCommentDto> addCommentToAds(AdsCommentDto adsCommentDto) {
-        return null;
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    @GetMapping(path = "/{user}/comments")
+    public ResponseEntity<ResponseWrapperAdsComment> getAllCommentsByUserId(@PathVariable Integer user) {
+        ResponseWrapperAdsComment ads = commentService.getAllCommentsByUserId(user);
+        if (ads != null) {
+            return ResponseEntity.ok(ads);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @DeleteMapping(path = "/{ad_pk}/comments/{id}")

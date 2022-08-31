@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.service.impl.UserServiceImpl;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -14,6 +16,16 @@ public class UserController {
 
     public UserController(UserServiceImpl userService) {
         this.userService = userService;
+    }
+
+    @GetMapping(path = "/all")
+    public ResponseEntity<List<UsersDto>> getAll() {
+        List<UsersDto> usersDto = userService.getUserAll();
+        if (usersDto.size() != 0) {
+            return ResponseEntity.ok(usersDto);
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
     }
 
     @PostMapping(path = "/add")
