@@ -2,6 +2,7 @@ package ru.skypro.homework.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.service.impl.UserServiceImpl;
@@ -27,7 +28,7 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
-
+/*
     @PostMapping(path = "/add")
     public ResponseEntity<UsersDto> add(@RequestBody RegisterReq createUser) {
         UsersDto usersDto = userService.add(createUser);
@@ -37,6 +38,9 @@ public class UserController {
         return ResponseEntity.ok(usersDto);
     }
 
+ */
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @DeleteMapping(path = "/deleteById/{id}")
     public ResponseEntity<UsersDto> deleteById(@PathVariable Integer id){
         UsersDto usersDto = userService.deleteUserById(id);
@@ -46,6 +50,7 @@ public class UserController {
         return ResponseEntity.ok(usersDto);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @DeleteMapping(path = "/deleteByUsername/{userName}")
     public ResponseEntity<UsersDto> deleteByUsername(@PathVariable String userName){
         UsersDto usersDto = userService.deleteUserByUsername(userName);
@@ -55,11 +60,13 @@ public class UserController {
         return ResponseEntity.ok(usersDto);
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping(path = "/me")
     public ResponseEntity<ResponseWrapperUser> getUsers() {
         return ResponseEntity.ok(userService.findAllUsers());
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @PutMapping(path = "/update")
     public ResponseEntity<UsersDto> updateUser(@RequestBody RegisterReq createUser) {
         UsersDto usersDto = userService.update(createUser);
@@ -71,6 +78,7 @@ public class UserController {
 
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping(path = "/{id}")
     public ResponseEntity<UsersDto> getUser(@PathVariable Integer id) {
         UsersDto usersDto = userService.getUser(id);
@@ -81,9 +89,10 @@ public class UserController {
         }
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @GetMapping(path = "getUserByUsername/{username}")
     public ResponseEntity<UsersDto> getUserByUsername(@PathVariable String username) {
-        UsersDto usersDto = userService.getUserByUsername(username);
+        UsersDto usersDto = userService.getUserDtoByUsername(username);
         if (usersDto != null) {
             return ResponseEntity.ok(usersDto);
         } else {

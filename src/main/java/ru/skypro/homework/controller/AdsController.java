@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.*;
@@ -55,16 +56,16 @@ public class AdsController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping(path = "/{ad_pk}/comments")
-    public ResponseEntity<AdsCommentDto> getAllCommentsAds(@PathVariable Integer ad_pk) {
-        AdsCommentDto ads = commentService.getComment(ad_pk);
-        if (ads != null) {
-            return ResponseEntity.ok(ads);
+    public ResponseEntity<ResponseWrapperAdsComment> getAllCommentsAds(@PathVariable Integer ad_pk) {
+        ResponseWrapperAdsComment responseWrapperAdsComment = commentService.getAllCommentsByAdsId(ad_pk);
+        if (responseWrapperAdsComment != null) {
+            return ResponseEntity.ok(responseWrapperAdsComment);
         } else {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
+    /*
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping(path = "/{message}/comments")
     public ResponseEntity<ResponseWrapperAdsComment> getAllCommentsByAdsId(@PathVariable Integer message) {
@@ -75,7 +76,6 @@ public class AdsController {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
     }
-
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     @GetMapping(path = "/{user}/comments")
     public ResponseEntity<ResponseWrapperAdsComment> getAllCommentsByUserId(@PathVariable Integer user) {
@@ -87,34 +87,51 @@ public class AdsController {
         }
     }
 
+     */
+
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @DeleteMapping(path = "/{ad_pk}/comments/{id}")
-    public ResponseEntity deleteAdsComemnt() {
-        return null;
+    public ResponseEntity deleteAdsComment(@PathVariable Integer ad_pk,
+                                           @PathVariable Integer id,
+                                           String username) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        adsService.deleteAds(id, authentication.getName());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(path = "/{ad_pk}/comments/{id}")
-    public ResponseEntity<AdsCommentDto> getAdsComment() {
-        return null;
+    public ResponseEntity<AdsCommentDto> getAdsComment(@PathVariable Integer ad_pk,
+                                                       @PathVariable Integer id) {
+        return ResponseEntity.ok(commentService.getAdsComment(id));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @PatchMapping(path = "/{ad_pk}/comments/{id}")
-    public ResponseEntity<AdsCommentDto> updateAdsComment(AdsCommentDto adsCommentDto)  {
-        return null;
+    public ResponseEntity<AdsCommentDto> updateAdsComment(@PathVariable Integer ad_pk,
+                                                          @PathVariable Integer id,
+                                                          @RequestBody AdsCommentDto adsCommentDto)  {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok(commentService.updateAdsComment(id, adsCommentDto, authentication.getName()));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @DeleteMapping(path = "/{id}")
-    public ResponseEntity deleteAds() {
-        return null;
+    public ResponseEntity deleteAds(@PathVariable Integer id) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        adsService.deleteAds(id, authentication.getName());
+        return ResponseEntity.ok().build();
     }
-
     @GetMapping(path = "/{id}")
-    public ResponseEntity<FullAdsDto> getFullAds() {
-        return null;
+    public ResponseEntity<FullAdsDto> getFullAds(@PathVariable Integer id) {
+        return ResponseEntity.ok(adsService.getAdsById(id));
     }
 
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
     @PatchMapping(path = "{id}")
-    public ResponseEntity<AdsDTO> updateAds(AdsDTO adsDTO) {
-        return null;
+    public ResponseEntity<AdsDTO> updateAds(@PathVariable Integer id,
+                                            @RequestBody AdsDTO adsDTO) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        return ResponseEntity.ok(adsService.updateAds(adsDTO, authentication.getName()));
     }
 
 

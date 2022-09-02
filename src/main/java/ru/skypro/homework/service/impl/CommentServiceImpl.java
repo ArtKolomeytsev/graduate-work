@@ -3,56 +3,74 @@ package ru.skypro.homework.service.impl;
 import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.AdsCommentDto;
 import ru.skypro.homework.dto.ResponseWrapperAdsComment;
-import ru.skypro.homework.mapper.AdsMapper;
+import ru.skypro.homework.entities.Ads;
+import ru.skypro.homework.entities.AdsComments;
+import ru.skypro.homework.entities.Users;
 import ru.skypro.homework.mapper.CommentMapper;
 import ru.skypro.homework.repo.AdsCommentRepo;
+import ru.skypro.homework.repo.AdsRepo;
+import ru.skypro.homework.repo.UserRepo;
 import ru.skypro.homework.service.CommentService;
 
 import java.util.List;
 
 @Service
 public class CommentServiceImpl implements CommentService {
-    private final AdsCommentRepo commentRepo;
-    private final AdsMapper adsMapper;
-    private final CommentMapper commentMapper;
 
-    public CommentServiceImpl(AdsCommentRepo commentRepo, AdsMapper adsMapper,CommentMapper commentMapper) {
-        this.commentRepo = commentRepo;
-        this.commentMapper = commentMapper;
-        this.adsMapper = adsMapper;
-    }
+    private final AdsCommentRepo adsCommentRepo;
+    private final AdsRepo adsRepo;
+    private final UserRepo userRepo;
+    private CommentMapper commentMapper;
 
-
-    @Override
-    public AdsCommentDto getComment(Integer id) {
-        AdsCommentDto adsComments =  commentMapper.EntityToDto(commentRepo.findAdsCommentsByIdComment(id));
-        return adsComments;
+    public CommentServiceImpl(AdsCommentRepo adsCommentRepo, AdsRepo adsRepo, UserRepo userRepo) {
+        this.adsCommentRepo = adsCommentRepo;
+        this.adsRepo = adsRepo;
+        this.userRepo = userRepo;
     }
 
     @Override
-    public ResponseWrapperAdsComment getAllComments() {
-        List<AdsCommentDto> adsComments =  commentMapper.commentEntitiesToDtoList(commentRepo.findAll());
+    public ResponseWrapperAdsComment getAllCommentsByAdsId(Integer id) {
         ResponseWrapperAdsComment responseWrapperAdsComment = new ResponseWrapperAdsComment();
-        responseWrapperAdsComment.setCount(adsComments.size());
-        responseWrapperAdsComment.setResult(adsComments);
+        List<AdsCommentDto> adsCommentDtos =
+                commentMapper.commentEntitiesToDtoList(adsCommentRepo.findAllByMessIdOrderByDateTimeDesc(id));
+        responseWrapperAdsComment.setCount(adsCommentDtos.size());
+        responseWrapperAdsComment.setResult(adsCommentDtos);
         return responseWrapperAdsComment;
     }
 
     @Override
-    public ResponseWrapperAdsComment getAllCommentsByUserId(Integer userId) {
-        List<AdsCommentDto> adsComments =  commentMapper.commentEntitiesToDtoList(commentRepo.findAdsCommentsByUser(userId));
-        ResponseWrapperAdsComment responseWrapperAdsComment = new ResponseWrapperAdsComment();
-        responseWrapperAdsComment.setCount(adsComments.size());
-        responseWrapperAdsComment.setResult(adsComments);
-        return responseWrapperAdsComment;
+    public void deleteAdsComment(Integer commentId, String username) {
+        Users user = userRepo.getUserByUsername(username);
+        AdsComments adsComments = adsCommentRepo.findById(commentId).get();
+        if (username.equals(user.getUsername())) {
+            adsCommentRepo.delete(adsComments);
+        }
     }
 
     @Override
-    public ResponseWrapperAdsComment getAllCommentsByAdsId(Integer adsIs) {
-        List<AdsCommentDto> adsComments =  commentMapper.commentEntitiesToDtoList(commentRepo.findAdsCommentsByMessages(adsIs));
-        ResponseWrapperAdsComment responseWrapperAdsComment = new ResponseWrapperAdsComment();
-        responseWrapperAdsComment.setCount(adsComments.size());
-        responseWrapperAdsComment.setResult(adsComments);
-        return responseWrapperAdsComment;
+    public AdsCommentDto getAdsComment(Integer commentId) {
+        AdsComments adsComments = adsCommentRepo.findById(commentId).get();
+        return commentMapper.EntityToDto(adsComments);
+    }
+
+    @Override
+    public AdsCommentDto updateAdsComment(Integer commentId, AdsCommentDto adsCommentDto, String username) {
+        AdsComments adsComments = adsCommentRepo.findById(commentId).get();
+        Users user = userRepo.getUserByUsername(username);
+        if (username.equals(user.getUsername())) {
+            adsComments.setDateTime(adsCommentDto.getDateTime());
+            adsCommentDto.setText(adsCommentDto.getText());
+            adsCommentRepo.save(adsComments);
+        }
+        return adsCommentDto;
+    }
+
+    @Override
+    public AdsCommentDto createAdsComment(Integer adsId, AdsCommentDto adsCommentDto) {
+        AdsComments adsComments = commentMapper.DtoToEntity(adsCommentDto);
+        adsComments.setUser(userRepo.findById(adsCommentDto.getAuthor()).get());
+        adsComments.setMessages(adsRepo.findById(adsId).get());
+        adsCommentRepo.save(adsComments);
+        return adsCommentDto;
     }
 }

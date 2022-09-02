@@ -11,9 +11,9 @@ public interface AdsService {
 
     public ResponseWrapperAds getAllMyAds(String username);
 
-    public void deleteAds();
+    public void deleteAds(Integer adsId,String username);
 
     public FullAdsDto getAdsById(Integer id);
 
-    public AdsDTO updateAds(AdsDTO adsDTO);
+    public AdsDTO updateAds(AdsDTO adsDTO, String username);
 }

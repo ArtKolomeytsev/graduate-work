@@ -20,10 +20,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UsersDto add(RegisterReq createUser) {
-        Users user = userMapper.toModel(createUser);
-        userRepo.save(user);
-        return userMapper.toDTO(user);
+    public UsersDto add(Users users) {
+        userRepo.save(users);
+        return userMapper.toDTO(users);
     }
 
     @Override
@@ -87,8 +86,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UsersDto getUserByUsername(String userName) {
+    public UsersDto getUserDtoByUsername(String userName) {
         return userMapper.toDTO(userRepo.getUserByUsername(userName));
+    }
+
+    @Override
+    public Users getUserByUsername(String userName) {
+        return userRepo.getUserByUsername(userName);
     }
 
     @Override

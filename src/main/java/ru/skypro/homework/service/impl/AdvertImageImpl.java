@@ -22,7 +22,7 @@ public class AdvertImageImpl implements AdvertImageService {
     }
 
     @Override
-    public void saveImage(MultipartFile file) {
+    public Integer saveImage(MultipartFile file) {
         AdvertImages advertImages = new AdvertImages();
         try {
             byte[] bytes = file.getBytes();
@@ -33,6 +33,7 @@ public class AdvertImageImpl implements AdvertImageService {
             throw new RuntimeException(e);
         }
         AdvertImages saveImage = advertImageRepo.save(advertImages);
+        return saveImage.getImgId();
     }
 
     @Override

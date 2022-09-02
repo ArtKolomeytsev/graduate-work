@@ -49,8 +49,12 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public void deleteAds() {
-
+    public void deleteAds(Integer id, String username) {
+        Users users = userRepo.findUsersByUsername(username);
+        Ads ads = adsRepo.findById(id).get();
+        if (username.equals(users.getUsername())) {
+            adsRepo.delete(ads);
+        }
     }
 
     @Override
@@ -60,7 +64,15 @@ public class AdsServiceImpl implements AdsService {
     }
 
     @Override
-    public AdsDTO updateAds(AdsDTO adsDTO) {
-        return null;
+    public AdsDTO updateAds(AdsDTO adsDTO, String username) {
+        Users users = userRepo.findUsersByUsername(username);
+        Ads ads = adsRepo.findById(adsDTO.getPk()).get();
+        if (username.equals(users.getUsername())) {
+            ads.setDescription(adsDTO.getDescription());
+            ads.setPrice(adsDTO.getPrice());
+            ads.setTitle(adsDTO.getTitle());
+            adsRepo.save(ads);
+        }
+        return adsDTO;
     }
 }

@@ -5,7 +5,7 @@ import ru.skypro.homework.dto.GetImageDto;
 
 public interface AdvertImageService {
 
-    void saveImage(MultipartFile multipartFile);
+    Integer saveImage(MultipartFile multipartFile);
 
     GetImageDto getImage(Integer id);
 }

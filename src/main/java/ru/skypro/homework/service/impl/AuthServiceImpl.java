@@ -6,6 +6,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
+import ru.skypro.homework.dto.CreateUserDto;
 import ru.skypro.homework.dto.RegisterReq;
 import ru.skypro.homework.dto.RoleDto;
 import ru.skypro.homework.dto.UsersDto;
@@ -52,15 +53,12 @@ public class AuthServiceImpl implements AuthService {
                         .roles(role.name())
                         .build()
         );
-
-        /*Users savedUser = userService.getUserByUsername(registerReq.getUsername());
+        Users savedUser = userService.getUserByUsername(registerReq.getUsername());
         savedUser.setFirstName(registerReq.getFirstName());
         savedUser.setLastName(registerReq.getLastName());
         savedUser.setPhone(registerReq.getPhone());
         savedUser.setEmail(registerReq.getUsername());
-        UsersDto usersDto = userMapper.toDTO(savedUser);
-        this.userService.updateUser(usersDto);*/
-
+        this.userService.add(savedUser);
         return true;
 
     }
