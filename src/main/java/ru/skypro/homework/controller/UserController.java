@@ -89,15 +89,4 @@ public class UserController {
         }
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
-    @GetMapping(path = "getUserByUsername/{username}")
-    public ResponseEntity<UsersDto> getUserByUsername(@PathVariable String username) {
-        UsersDto usersDto = userService.getUserDtoByUsername(username);
-        if (usersDto != null) {
-            return ResponseEntity.ok(usersDto);
-        } else {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
-        }
-    }
-
 }

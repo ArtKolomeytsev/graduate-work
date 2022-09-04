@@ -13,7 +13,7 @@ import java.util.List;
 public interface AdsMapper {
 
     @Mapping(source = "messId", target = "pk")
-    @Mapping(source = "user.id", target = "author")
+    @Mapping(source = "user.userid", target = "author")
     AdsDTO adsEntityToDto(Ads ads);
 
     Ads createAdsToEntity(CreateAdsDto createAds);

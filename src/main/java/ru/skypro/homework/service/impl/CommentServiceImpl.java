@@ -20,19 +20,20 @@ public class CommentServiceImpl implements CommentService {
     private final AdsCommentRepo adsCommentRepo;
     private final AdsRepo adsRepo;
     private final UserRepo userRepo;
-    private CommentMapper commentMapper;
+    private final CommentMapper commentMapper;
 
-    public CommentServiceImpl(AdsCommentRepo adsCommentRepo, AdsRepo adsRepo, UserRepo userRepo) {
+    public CommentServiceImpl(AdsCommentRepo adsCommentRepo, AdsRepo adsRepo, UserRepo userRepo, CommentMapper commentMapper) {
         this.adsCommentRepo = adsCommentRepo;
         this.adsRepo = adsRepo;
         this.userRepo = userRepo;
+        this.commentMapper = commentMapper;
     }
 
     @Override
     public ResponseWrapperAdsComment getAllCommentsByAdsId(Integer id) {
         ResponseWrapperAdsComment responseWrapperAdsComment = new ResponseWrapperAdsComment();
         List<AdsCommentDto> adsCommentDtos =
-                commentMapper.commentEntitiesToDtoList(adsCommentRepo.findAllByMessIdOrderByDateTimeDesc(id));
+                commentMapper.commentEntitiesToDtoList(adsCommentRepo.findAllByMessagesMessIdOrderByDateTimeDesc(id));
         responseWrapperAdsComment.setCount(adsCommentDtos.size());
         responseWrapperAdsComment.setResult(adsCommentDtos);
         return responseWrapperAdsComment;
@@ -40,7 +41,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteAdsComment(Integer commentId, String username) {
-        Users user = userRepo.getUserByUsername(username);
+        Users user = userRepo.findUsersByUsername(username).get();
         AdsComments adsComments = adsCommentRepo.findById(commentId).get();
         if (username.equals(user.getUsername())) {
             adsCommentRepo.delete(adsComments);
@@ -56,7 +57,7 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public AdsCommentDto updateAdsComment(Integer commentId, AdsCommentDto adsCommentDto, String username) {
         AdsComments adsComments = adsCommentRepo.findById(commentId).get();
-        Users user = userRepo.getUserByUsername(username);
+        Users user = userRepo.findUsersByUsername(username).get();
         if (username.equals(user.getUsername())) {
             adsComments.setDateTime(adsCommentDto.getDateTime());
             adsCommentDto.setText(adsCommentDto.getText());

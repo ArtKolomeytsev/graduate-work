@@ -8,7 +8,7 @@ import ru.skypro.homework.entities.AdsComments;
 import java.util.List;
 
 public interface AdsCommentRepo extends JpaRepository<AdsComments, Integer> {
-    List<AdsComments> findAllByMessIdOrderByDateTimeDesc(Integer id);
+    List<AdsComments> findAllByMessagesMessIdOrderByDateTimeDesc(Integer id);
 
     AdsComments getByIdComment(Integer id);
 }

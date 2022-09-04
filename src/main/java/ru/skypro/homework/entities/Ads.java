@@ -4,6 +4,7 @@ import lombok.Data;
 import org.springframework.data.annotation.CreatedDate;
 
 import javax.persistence.*;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -27,7 +28,7 @@ public class Ads {
 
     @Column(name = "date_mess")
     @CreatedDate
-    private Date dateMess;
+    private OffsetDateTime dateMess;
 
     @ManyToOne
     @JoinColumn(name = "userid")

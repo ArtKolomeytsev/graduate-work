@@ -20,9 +20,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UsersDto add(Users users) {
-        userRepo.save(users);
-        return userMapper.toDTO(users);
+    public Users add(Users users) {
+        Users user = userRepo.findUsersByUsername(users.getUsername()).get();
+        user.setFirstName(users.getFirstName());
+        user.setLastName(users.getLastName());
+        user.setPhone(users.getPhone());
+        userRepo.save(user);
+        return user;
     }
 
     @Override
@@ -49,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UsersDto deleteUserByUsername(String userName) {
-        Users user = userRepo.findUsersByUsername(userName);
+        Users user = userRepo.findUsersByUsername(userName).get();
         if(user == null){
             return null;
         }else {
@@ -86,13 +90,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UsersDto getUserDtoByUsername(String userName) {
-        return userMapper.toDTO(userRepo.getUserByUsername(userName));
-    }
-
-    @Override
     public Users getUserByUsername(String userName) {
-        return userRepo.getUserByUsername(userName);
+        return userRepo.findUsersByUsername(userName).get();
     }
 
     @Override

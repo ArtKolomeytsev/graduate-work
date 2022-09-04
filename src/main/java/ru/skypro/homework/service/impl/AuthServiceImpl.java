@@ -53,7 +53,7 @@ public class AuthServiceImpl implements AuthService {
                         .roles(role.name())
                         .build()
         );
-        Users savedUser = userService.getUserByUsername(registerReq.getUsername());
+        Users savedUser = this.userService.getUserByUsername(registerReq.getUsername());
         savedUser.setFirstName(registerReq.getFirstName());
         savedUser.setLastName(registerReq.getLastName());
         savedUser.setPhone(registerReq.getPhone());

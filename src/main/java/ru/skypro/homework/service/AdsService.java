@@ -16,4 +16,6 @@ public interface AdsService {
     public FullAdsDto getAdsById(Integer id);
 
     public AdsDTO updateAds(AdsDTO adsDTO, String username);
+
+    public Ads findByMessId(Integer id);
 }

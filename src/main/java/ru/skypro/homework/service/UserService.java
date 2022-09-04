@@ -11,7 +11,7 @@ public interface UserService {
 
     UsersDto setPassword(UsersDto usersDto, NewPassword newPassword);
 
-    UsersDto add(Users users);
+    Users add(Users users);
 
     UsersDto update(RegisterReq updateUser);
 
@@ -20,8 +20,6 @@ public interface UserService {
     UsersDto deleteUserByUsername(String userName);
 
     ResponseWrapperUser findAllUsers();
-
-    UsersDto getUserDtoByUsername(String userName);
 
     Users getUserByUsername(String userName);
 

@@ -8,4 +8,5 @@ public class CreateAdsDto {
     private Integer price;
     private String description;
     private String title;
+
 }
