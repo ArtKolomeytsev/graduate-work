@@ -29,6 +29,6 @@ public class AdsComments {
     private Ads messages;
 
     @ManyToOne
-    @JoinColumn(name = "userid")
+    @JoinColumn(name = "userId")
     private Users user;
 }

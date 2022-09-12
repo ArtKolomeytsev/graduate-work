@@ -17,7 +17,7 @@ public class Users {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private Integer userid;
+    private Integer userId;
     @Column(name = "Username")
     private String username;
     @Column(name = "Password")
@@ -32,12 +32,7 @@ public class Users {
     private String email;
     @Column(name = "enabled")
     private boolean enabled;
-    public enum RoleEnum {
-        ADMIN, USER;
-    }
-    @Column(name = "Role")
-    @Enumerated(EnumType.STRING)
-    private RoleEnum roleEnum;
+
 
     @OneToMany(mappedBy = "user")
     private List<Ads> adsList;

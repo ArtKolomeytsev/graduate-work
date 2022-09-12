@@ -13,10 +13,10 @@ import java.util.List;
 public interface CommentMapper {
 
     @Mapping(source = "pk", target = "messages.messId")
-    @Mapping(source = "author", target = "user.userid")
+    @Mapping(source = "author", target = "user.userId")
     AdsComments DtoToEntity(AdsCommentDto adsCommentDto);
 
-    @Mapping(source = "user.userid", target = "author")
+    @Mapping(source = "user.userId", target = "author")
     AdsCommentDto EntityToDto(AdsComments adsComments);
 
     List<AdsCommentDto> commentEntitiesToDtoList (List<AdsComments> adsCommentList);

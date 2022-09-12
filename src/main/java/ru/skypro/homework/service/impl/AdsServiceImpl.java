@@ -4,6 +4,8 @@ import org.springframework.stereotype.Service;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.entities.Ads;
 import ru.skypro.homework.entities.Users;
+import ru.skypro.homework.exceprion.AdvertNotFoundException;
+import ru.skypro.homework.exceprion.UserNotFoundException;
 import ru.skypro.homework.mapper.AdsMapper;
 import ru.skypro.homework.repo.AdsRepo;
 import ru.skypro.homework.repo.UserRepo;
@@ -42,8 +44,8 @@ public class AdsServiceImpl implements AdsService {
 
     @Override
     public ResponseWrapperAds getAllMyAds(String username) {
-        Users user = userRepo.findUsersByUsername(username).get();
-        List<AdsDTO> adsDTO = adsMapper.adsEntityToDtoList(adsRepo.findByUserId(user.getUserid()));
+        Users user = userRepo.findUsersByUsername(username).orElseThrow(UserNotFoundException::new);
+        List<AdsDTO> adsDTO = adsMapper.adsEntityToDtoList(adsRepo.findAllByUserUserId(user.getUserId()));
         ResponseWrapperAds responseWrapperAds = new ResponseWrapperAds();
         responseWrapperAds.setCount(adsDTO.size());
         responseWrapperAds.setResult(adsDTO);
@@ -52,8 +54,8 @@ public class AdsServiceImpl implements AdsService {
 
     @Override
     public void deleteAds(Integer id, String username) {
-        Users users = userRepo.findUsersByUsername(username).get();
-        Ads ads = adsRepo.findById(id).get();
+        Users users = userRepo.findUsersByUsername(username).orElseThrow(UserNotFoundException::new);
+        Ads ads = adsRepo.findById(id).orElseThrow(AdvertNotFoundException::new);
         if (username.equals(users.getUsername())) {
             adsRepo.delete(ads);
         }
@@ -61,13 +63,13 @@ public class AdsServiceImpl implements AdsService {
 
     @Override
     public FullAdsDto getAdsById(Integer id) {
-        Ads ads = adsRepo.findById(id).get();
+        Ads ads = adsRepo.findById(id).orElseThrow(AdvertNotFoundException::new);
         return adsMapper.entityToFullAds(ads);
     }
 
     @Override
     public AdsDTO updateAds(AdsDTO adsDTO, String username) {
-        Users users = userRepo.findUsersByUsername(username).get();
+        Users users = userRepo.findUsersByUsername(username).orElseThrow(UserNotFoundException::new);
         Ads ads = adsRepo.findById(adsDTO.getPk()).get();
         if (username.equals(users.getUsername())) {
             ads.setDescription(adsDTO.getDescription());
@@ -80,6 +82,6 @@ public class AdsServiceImpl implements AdsService {
 
     @Override
     public Ads findByMessId(Integer id) {
-        return adsRepo.findByMessId(id);
+        return adsRepo.findByMessId(id).orElseThrow(AdvertNotFoundException::new);
     }
 }

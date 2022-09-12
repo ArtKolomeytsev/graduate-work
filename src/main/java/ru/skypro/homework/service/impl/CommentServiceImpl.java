@@ -6,6 +6,9 @@ import ru.skypro.homework.dto.ResponseWrapperAdsComment;
 import ru.skypro.homework.entities.Ads;
 import ru.skypro.homework.entities.AdsComments;
 import ru.skypro.homework.entities.Users;
+import ru.skypro.homework.exceprion.AdvertNotFoundException;
+import ru.skypro.homework.exceprion.CommentNotFoundException;
+import ru.skypro.homework.exceprion.UserNotFoundException;
 import ru.skypro.homework.mapper.CommentMapper;
 import ru.skypro.homework.repo.AdsCommentRepo;
 import ru.skypro.homework.repo.AdsRepo;
@@ -41,8 +44,8 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteAdsComment(Integer commentId, String username) {
-        Users user = userRepo.findUsersByUsername(username).get();
-        AdsComments adsComments = adsCommentRepo.findById(commentId).get();
+        Users user = userRepo.findUsersByUsername(username).orElseThrow(UserNotFoundException::new);
+        AdsComments adsComments = adsCommentRepo.findById(commentId).orElseThrow(CommentNotFoundException::new);
         if (username.equals(user.getUsername())) {
             adsCommentRepo.delete(adsComments);
         }
@@ -50,14 +53,14 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public AdsCommentDto getAdsComment(Integer commentId) {
-        AdsComments adsComments = adsCommentRepo.findById(commentId).get();
+        AdsComments adsComments = adsCommentRepo.findById(commentId).orElseThrow(CommentNotFoundException::new);
         return commentMapper.EntityToDto(adsComments);
     }
 
     @Override
     public AdsCommentDto updateAdsComment(Integer commentId, AdsCommentDto adsCommentDto, String username) {
-        AdsComments adsComments = adsCommentRepo.findById(commentId).get();
-        Users user = userRepo.findUsersByUsername(username).get();
+        AdsComments adsComments = adsCommentRepo.findById(commentId).orElseThrow(CommentNotFoundException::new);
+        Users user = userRepo.findUsersByUsername(username).orElseThrow(UserNotFoundException::new);
         if (username.equals(user.getUsername())) {
             adsComments.setDateTime(adsCommentDto.getDateTime());
             adsCommentDto.setText(adsCommentDto.getText());
@@ -69,8 +72,8 @@ public class CommentServiceImpl implements CommentService {
     @Override
     public AdsCommentDto createAdsComment(Integer adsId, AdsCommentDto adsCommentDto) {
         AdsComments adsComments = commentMapper.DtoToEntity(adsCommentDto);
-        adsComments.setUser(userRepo.findById(adsCommentDto.getAuthor()).get());
-        adsComments.setMessages(adsRepo.findById(adsId).get());
+        adsComments.setUser(userRepo.findById(adsCommentDto.getAuthor()).orElseThrow(UserNotFoundException::new));
+        adsComments.setMessages(adsRepo.findById(adsId).orElseThrow(AdvertNotFoundException::new));
         adsCommentRepo.save(adsComments);
         return adsCommentDto;
     }

@@ -11,10 +11,7 @@ import java.util.Optional;
 @Repository
 public interface UserRepo extends JpaRepository<Users, Integer> {
 
-    @Query(value = "select * from users order by userId",nativeQuery = true)
-    List<Users> findAllUsers();
 
-    Users findUsersByUserid(Integer id);
+    List<Users> findAllByOrderByUserId();
     Optional<Users> findUsersByUsername(String username);
-    void deleteUsersByUserid(Integer id);
 }

@@ -15,13 +15,7 @@ public interface UserService {
 
     UsersDto update(RegisterReq updateUser);
 
-    UsersDto deleteUserById(Integer id);
-
-    UsersDto deleteUserByUsername(String userName);
-
     ResponseWrapperUser findAllUsers();
 
     Users getUserByUsername(String userName);
-
-    List<UsersDto>  getUserAll();
 }

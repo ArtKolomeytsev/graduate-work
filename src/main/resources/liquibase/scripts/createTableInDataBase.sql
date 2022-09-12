@@ -8,8 +8,8 @@ CREATE TABLE IF NOT EXISTS users
     ,password character varying(255) COLLATE pg_catalog."default"
     ,phone character varying(255) COLLATE pg_catalog."default"
     ,username character varying(255) COLLATE pg_catalog."default"
-    ,role character varying(10) COLLATE pg_catalog."default"
     ,enabled boolean
+    ,email character varying(255) COLLATE pg_catalog."default"
     ,CONSTRAINT usr_pkey PRIMARY KEY (id)
 );
 
@@ -55,10 +55,9 @@ CREATE TABLE IF NOT EXISTS ads_comment
                         ON UPDATE NO ACTION
                         ON DELETE NO ACTION
 );
-
 CREATE TABLE IF NOT EXISTS public.authorities
 (
-    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 2147483647 CACHE 1 )
-    ,username character varying(255) COLLATE pg_catalog."default"
-    ,authority character varying(255) COLLATE pg_catalog."default"
+    username character varying(255) COLLATE pg_catalog."default" NOT NULL,
+    authority character varying(255) COLLATE pg_catalog."default",
+    CONSTRAINT authorities_pkey PRIMARY KEY (username)
 );

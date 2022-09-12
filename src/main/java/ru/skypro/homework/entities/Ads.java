@@ -31,7 +31,7 @@ public class Ads {
     private OffsetDateTime dateMess;
 
     @ManyToOne
-    @JoinColumn(name = "userid")
+    @JoinColumn(name = "userId")
     private Users user;
 
     @OneToMany(mappedBy = "messages")
