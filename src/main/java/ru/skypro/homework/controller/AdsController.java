@@ -5,12 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.entities.Ads;
 import ru.skypro.homework.service.AdsService;
 import ru.skypro.homework.service.CommentService;
 
+@Validated
 @RestController
 @CrossOrigin(value = "http://localhost:3000")
 @RequestMapping(path = "/ads")

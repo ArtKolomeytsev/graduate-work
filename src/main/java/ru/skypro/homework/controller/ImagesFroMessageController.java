@@ -2,16 +2,13 @@ package ru.skypro.homework.controller;
 
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import ru.skypro.homework.dto.CreateAdsDto;
-import ru.skypro.homework.dto.GetImageDto;
-import ru.skypro.homework.dto.ImagesForMessageDto;
 import ru.skypro.homework.service.AdvertImageService;
 
-import java.util.List;
 
-
+@Validated
 @RestController
 @RequestMapping("images")
 public class ImagesFroMessageController {
@@ -27,9 +24,9 @@ public class ImagesFroMessageController {
         return ResponseEntity.ok().body(advertImageService.getImage(idImage));
     }
 
-    @PostMapping(path = "{idMessage}/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Integer> addImage(@PathVariable Integer idMessage,
+    @PostMapping(path = "{idAdvert}/add", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Integer> addImage(@PathVariable Integer idAdvert,
                                             @RequestParam MultipartFile image){
-        return ResponseEntity.ok(advertImageService.saveImage(idMessage, image));
+        return ResponseEntity.ok(advertImageService.saveImage(idAdvert, image));
     }
 }

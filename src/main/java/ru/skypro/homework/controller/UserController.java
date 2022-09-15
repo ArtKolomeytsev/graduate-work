@@ -5,13 +5,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.skypro.homework.dto.*;
 import ru.skypro.homework.entities.Users;
 import ru.skypro.homework.service.impl.UserServiceImpl;
 
-import java.util.List;
 
+@Validated
 @RestController
 @RequestMapping("users")
 public class UserController {
